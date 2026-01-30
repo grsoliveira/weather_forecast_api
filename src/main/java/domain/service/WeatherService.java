@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 public class WeatherService {
 
   private GeocodingService geocodingService;
+  private OpenMeteoService openMeteoService;
 
   public WeatherResponse getWeatherByZip(String zip) {
 
     Optional<Location> locationByZip = this.geocodingService.getLocationByZip(zip);
     System.out.println("Location for zip " + zip + ": " + locationByZip.get());
 
-    //TODO remove mock implementation
-    return new WeatherResponse(zip, 25.0);
+    Optional<WeatherResponse> weatherByLocation = this.openMeteoService.getWeatherByLocation(locationByZip.get());
+    System.out.println("Weather for location " + locationByZip.get() + ": " + weatherByLocation.get());
+
+    return weatherByLocation.get();
   }
 }
