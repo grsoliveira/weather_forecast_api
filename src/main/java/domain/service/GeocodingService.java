@@ -3,8 +3,10 @@ package domain.service;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import domain.exception.DataNotFoundException;
 import domain.model.Location;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -18,7 +20,13 @@ public class GeocodingService {
     //{"country": "United States", "country abbreviation": "US", "post code": "90210", "places": [{"place name": "Beverly Hills", "longitude": "-118.4065", "latitude": "34.0901", "state": "California", "state abbreviation": "CA"}]}
 
     final String url = "http://api.zippopotam.us/us/" + zip;
-    JsonNode node = restTemplate.getForObject(url, JsonNode.class);
+    JsonNode node = null;
+    try {
+      node = restTemplate.getForObject(url, JsonNode.class);
+
+    } catch (HttpClientErrorException e) {
+      throw new DataNotFoundException("Zip code not found.", e);
+    }
 
     if (node == null) {
       return Optional.empty();
