@@ -1,5 +1,7 @@
 package domain.service;
 
+import java.util.Optional;
+
 import domain.model.Location;
 import domain.model.WeatherResponse;
 import lombok.AllArgsConstructor;
@@ -13,8 +15,8 @@ public class WeatherService {
 
   public WeatherResponse getWeatherByZip(String zip) {
 
-    Location locationByZip = this.geocodingService.getLocationByZip(zip);
-    System.out.println("Location for zip " + zip + ": " + locationByZip);
+    Optional<Location> locationByZip = this.geocodingService.getLocationByZip(zip);
+    System.out.println("Location for zip " + zip + ": " + locationByZip.get());
 
     //TODO remove mock implementation
     return new WeatherResponse(zip, 25.0);
