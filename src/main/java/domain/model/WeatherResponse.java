@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class WeatherResponse {
   private String zip;
   private double currentTemperature;
+  private boolean fromCache;
 }

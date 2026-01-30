@@ -37,10 +37,10 @@ public class GeocodingService {
     }
 
     return Optional.of(Location.builder()
-            .zip(zip)
-            .latitude(Double.parseDouble(latitude))
-            .longitude(Double.parseDouble(longitude))
-            .build());
+        .zip(zip)
+        .latitude(Double.parseDouble(latitude))
+        .longitude(Double.parseDouble(longitude))
+        .build());
   }
 
 }
