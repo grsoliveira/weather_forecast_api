@@ -11,10 +11,24 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class WeatherService {
 
+  private WeatherCacheService cacheService;
   private GeocodingService geocodingService;
   private OpenMeteoService openMeteoService;
 
   public WeatherResponse getWeatherByZip(String zip) {
+    Optional<WeatherResponse> cachedForecast = cacheService.getCachedForecast(zip);
+
+    if (cachedForecast.isPresent()) {
+      WeatherResponse weatherFromCache = cachedForecast.get();
+      weatherFromCache.setFromCache(true);
+      return weatherFromCache;
+    }
+
+    this.fetchAndCache(zip);
+    return cacheService.getCachedForecast(zip).get();
+  }
+
+  private void fetchAndCache(String zip) {
 
     Optional<Location> locationByZip = this.geocodingService.getLocationByZip(zip);
     System.out.println("Location for zip " + zip + ": " + locationByZip.get());
@@ -22,6 +36,11 @@ public class WeatherService {
     Optional<WeatherResponse> weatherByLocation = this.openMeteoService.getWeatherByLocation(locationByZip.get());
     System.out.println("Weather for location " + locationByZip.get() + ": " + weatherByLocation.get());
 
-    return weatherByLocation.get();
+    //set WeatherResponse fromCache = false
+    WeatherResponse weather = weatherByLocation.get();
+    weather.setFromCache(false);
+    cacheService.save(zip, weather);
   }
+
+
 }
