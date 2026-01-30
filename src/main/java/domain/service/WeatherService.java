@@ -15,7 +15,7 @@ public class WeatherService {
   private GeocodingService geocodingService;
   private OpenMeteoService openMeteoService;
 
-  public WeatherResponse getWeatherByZip(String zip) {
+  public WeatherResponse getWeatherByZip(String zip, boolean forecast) {
     Optional<WeatherResponse> cachedForecast = cacheService.getCachedForecast(zip);
 
     if (cachedForecast.isPresent()) {

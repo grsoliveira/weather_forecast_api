@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,9 +16,10 @@ public class WeatherController {
 
   private WeatherService weatherService;
 
-  @GetMapping("/{zip}")
-  public WeatherResponse getWeather(@PathVariable String zip) {
-    return this.weatherService.getWeatherByZip(zip);
+  @GetMapping()
+  public WeatherResponse getWeather(@RequestParam String zip,
+                                    @RequestParam(defaultValue = "false") boolean forecast) {
+    return this.weatherService.getWeatherByZip(zip, forecast);
   }
 
 }
