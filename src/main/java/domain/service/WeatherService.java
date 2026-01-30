@@ -1,6 +1,6 @@
-package com.olixcorp.weather_forecast_api.service;
+package domain.service;
 
-import com.olixcorp.weather_forecast_api.model.WeatherResponse;
+import domain.model.WeatherResponse;
 import org.springframework.stereotype.Service;
 
 @Service

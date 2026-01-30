@@ -1,4 +1,4 @@
-package com.olixcorp.weather_forecast_api.model;
+package domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
