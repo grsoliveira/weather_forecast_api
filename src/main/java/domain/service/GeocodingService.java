@@ -36,7 +36,11 @@ public class GeocodingService {
       return Optional.empty();
     }
 
-    return Optional.of(new Location(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+    return Optional.of(Location.builder()
+            .zip(zip)
+            .latitude(Double.parseDouble(latitude))
+            .longitude(Double.parseDouble(longitude))
+            .build());
   }
 
 }
