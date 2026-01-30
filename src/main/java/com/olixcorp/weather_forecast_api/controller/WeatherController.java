@@ -1,7 +1,7 @@
 package com.olixcorp.weather_forecast_api.controller;
 
-import com.olixcorp.weather_forecast_api.model.WeatherResponse;
-import com.olixcorp.weather_forecast_api.service.WeatherService;
+import domain.model.WeatherResponse;
+import domain.service.WeatherService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
