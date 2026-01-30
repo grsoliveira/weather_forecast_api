@@ -15,32 +15,26 @@ public class WeatherService {
   private GeocodingService geocodingService;
   private OpenMeteoService openMeteoService;
 
-  public WeatherResponse getWeatherByZip(String zip) {
-    Optional<WeatherResponse> cachedForecast = cacheService.getCachedForecast(zip);
-
+  public WeatherResponse getWeatherByZip(String zip, boolean forecast) {
+    Optional<WeatherResponse> cachedForecast = cacheService.getCachedForecast(zip, forecast);
     if (cachedForecast.isPresent()) {
       WeatherResponse weatherFromCache = cachedForecast.get();
-      weatherFromCache.setFromCache(true);
+      weatherFromCache.setFromCache(Boolean.TRUE);
       return weatherFromCache;
     }
-
     this.fetchAndCache(zip);
-    return cacheService.getCachedForecast(zip).get();
+    return cacheService.getCachedForecast(zip, forecast).get();
   }
 
   private void fetchAndCache(String zip) {
-
     Optional<Location> locationByZip = this.geocodingService.getLocationByZip(zip);
     System.out.println("Location for zip " + zip + ": " + locationByZip.get());
 
     Optional<WeatherResponse> weatherByLocation = this.openMeteoService.getWeatherByLocation(locationByZip.get());
     System.out.println("Weather for location " + locationByZip.get() + ": " + weatherByLocation.get());
 
-    //set WeatherResponse fromCache = false
     WeatherResponse weather = weatherByLocation.get();
     weather.setFromCache(false);
     cacheService.save(zip, weather);
   }
-
-
 }
