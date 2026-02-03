@@ -20,15 +20,15 @@ The project was designed with clean architecture principles, clear separation of
 
 ## Tech Stack & Versions
 
-| Tool / Framework       | Version |
-|------------------------|---------|
-| Java                   | 17 |
-| Spring Boot            | 3.x |
-| Spring Web (REST)      | Included |
+| Tool / Framework       | Version               |
+|------------------------|-----------------------|
+| Java                   | 21                     |
+| Spring Boot            | 3.x                   |
+| Spring Web (REST)      | Included              |
 | Jackson                | Default (Spring Boot) |
-| Maven                  | 3.9+ |
-| JUnit / Mockito        | 5.x |
-| HTTP Client            | RestTemplate |
+| Maven                  | 3.9+                  |
+| JUnit / Mockito        | 5.x                   |
+| HTTP Client            | RestTemplate          |
 
 ---
 
@@ -75,7 +75,7 @@ This design allows easy replacement with Redis or Caffeine in the future.
 
 ## API Endpoint
 
-### GET `/weather`
+### GET `/api/weather`
 
 #### Query Parameters
 
@@ -89,7 +89,7 @@ This design allows easy replacement with Redis or Caffeine in the future.
 ### Example – Without Forecast
 
 ```http
-GET /weather?zip=90210
+GET /api/weather?zip=90210
 ```
 
 ```json
@@ -103,7 +103,7 @@ GET /weather?zip=90210
 ### Example – With Forecast
 
 ```http
-GET /weather?zip=90210&forecast=true
+GET /api/weather?zip=90210&forecast=true
 ```
 
 ```json
@@ -138,14 +138,18 @@ GET /weather?zip=90210&forecast=true
 ## How to Run the Project
 ### Prerequisites
 
-* Java 17+
+* Java 21+
 * Maven 3.9+
 
 ### Steps
 ```git
 git clone https://github.com/your-username/weather-api.git
 cd weather-api
-mvn clean spring-boot:run
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH=$JAVA_HOME/bin:$PATH
+
+mvn clean install spring-boot:run
 ```
 
 The application will start on:
